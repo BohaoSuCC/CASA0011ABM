@@ -1,0 +1,46 @@
+<mxfile host="65bd71144e">
+    <diagram id="_PirKeItPbGo-jws9rcY" name="第 1 页">
+        <mxGraphModel dx="1386" dy="779" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="6" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=13;fontColor=#000000;strokeWidth=2;" edge="1" parent="1" source="2" target="5">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="" style="edgeStyle=none;html=1;strokeWidth=2;fontSize=13;fontColor=#000000;" edge="1" parent="1" source="2" target="5">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fontSize=13;fontColor=#000000;" edge="1" parent="1" source="2" target="3">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="Simulate Shared Transport Systems in motropolis" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECE8ED;strokeColor=#56517e;fontColor=#000000;fontSize=15;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="150" y="220" width="210" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontSize=13;fontColor=#000000;" edge="1" parent="1" source="3" target="9">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fontSize=13;fontColor=#000000;" edge="1" parent="1" source="3" target="4">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="How would people react to different parameters of the STS?" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECE8ED;strokeColor=#56517e;fontColor=#000000;fontSize=15;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="450" y="220" width="210" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontSize=13;fontColor=#000000;" edge="1" parent="1" source="4" target="12">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Given the Marginal Minimum Cost, to ensure the profitable operation of this STS, what should be the minimum city size and population" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECE8ED;strokeColor=#56517e;fontColor=#000000;fontSize=15;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="760" y="220" width="360" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="&lt;p style=&quot;line-height: 160%;&quot;&gt;&lt;b&gt;approaches:&lt;br&gt;&lt;/b&gt;bike&lt;br&gt;e-scooter&lt;br&gt;car&lt;br&gt;taxi&lt;br&gt;auto......&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECE8ED;strokeColor=#56517e;fontColor=#000000;fontSize=13;fontStyle=0" vertex="1" parent="1">
+                    <mxGeometry x="165" y="340" width="180" height="136" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="&lt;p style=&quot;line-height: 160%;&quot;&gt;&lt;b&gt;parameters:&lt;br&gt;&lt;/b&gt;coverage&lt;br&gt;capacity&lt;br&gt;verocity&lt;br&gt;.........&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECE8ED;strokeColor=#56517e;fontColor=#000000;fontSize=13;fontStyle=0" vertex="1" parent="1">
+                    <mxGeometry x="465" y="340" width="180" height="136" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="&lt;p style=&quot;line-height: 160%;&quot;&gt;&lt;b&gt;Restriction:&lt;br&gt;&lt;/b&gt;city size&lt;br&gt;population&lt;br&gt;commuting flow volume&lt;br&gt;.........&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECE8ED;strokeColor=#56517e;fontColor=#000000;fontSize=13;fontStyle=0" vertex="1" parent="1">
+                    <mxGeometry x="850" y="340" width="180" height="136" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
