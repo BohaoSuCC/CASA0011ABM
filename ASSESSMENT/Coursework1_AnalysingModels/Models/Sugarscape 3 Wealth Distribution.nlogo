@@ -1,6 +1,8 @@
 globals [
   gini-index-reserve
   lorenz-points
+  death-count ;; the counts of turtles died due to no sugar
+  survival-ratio ;; the proportion of turtles died due to no sugar
 ]
 
 turtles-own [
@@ -28,6 +30,8 @@ to setup
   ]
   clear-all
   create-turtles initial-population [ turtle-setup ]
+  set death-count 0
+  set survival-ratio 1
   setup-patches
   update-lorenz-and-gini
   reset-ticks
@@ -41,12 +45,16 @@ to turtle-setup ;; turtle procedure
   set metabolism random-in-range 1 4
   set max-age random-in-range 60 100
   set age 0
-  set vision random-in-range 1 6
+  set vision random-in-range 1 max-initial-vision
   ;; turtles can look horizontally and vertically up to vision patches
   ;; but cannot look diagonally at all
   set vision-points []
   foreach (range 1 (vision + 1)) [ n ->
-    set vision-points sentence vision-points (list (list 0 n) (list n 0) (list 0 (- n)) (list (- n) 0))
+    set vision-points sentence vision-points (list
+      (list 0 n)
+      (list n 0)
+      (list 0 (- n))
+      (list (- n) 0))
   ]
   run visualization
 end
@@ -55,7 +63,7 @@ to setup-patches
   file-open "sugar-map.txt"
   foreach sort patches [ p ->
     ask p [
-      set max-psugar file-read
+      set max-psugar (file-read + 3)
       set psugar max-psugar
       patch-recolor
     ]
@@ -79,12 +87,21 @@ to go
     turtle-move
     turtle-eat
     set age (age + 1)
-    if sugar <= 0 or age > max-age [
+    if sugar <= 0 [
+      set death-count (death-count + 1)
+      die
+    ]
+    if age > max-age [
       hatch 1 [ turtle-setup ]
+      set death-count (death-count + 1)
       die
     ]
     run visualization
+
+
   ]
+  let total-turtles count turtles
+  set survival-ratio (total-turtles / initial-population)
   update-lorenz-and-gini
   tick
 end
@@ -248,7 +265,7 @@ CHOOSER
 visualization
 visualization
 "no-visualization" "color-agents-by-vision" "color-agents-by-metabolism"
-0
+1
 
 PLOT
 720
@@ -277,7 +294,7 @@ initial-population
 initial-population
 10
 1000
-400.0
+210.0
 10
 1
 NIL
@@ -345,6 +362,61 @@ maximum-sugar-endowment
 0
 200
 25.0
+1
+1
+NIL
+HORIZONTAL
+
+MONITOR
+635
+495
+722
+540
+NIL
+death-count
+17
+1
+11
+
+PLOT
+495
+570
+695
+720
+Survival Ratio
+NIL
+NIL
+0.0
+10.0
+0.0
+1.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plotxy ticks survival-ratio"
+
+MONITOR
+370
+500
+452
+545
+population
+count turtles
+17
+1
+11
+
+SLIDER
+55
+295
+227
+328
+max-initial-vision
+max-initial-vision
+4
+13
+6.0
 1
 1
 NIL
@@ -725,6 +797,18 @@ NetLogo 6.4.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
+<experiments>
+  <experiment name="experiment" repetitions="4" runMetricsEveryStep="false">
+    <setup>setup</setup>
+    <go>go</go>
+    <exitCondition>ticks = 2000</exitCondition>
+    <metric>Gini-index-reserve</metric>
+    <metric>survival-ratio</metric>
+    <runMetricsCondition>ticks mod 100 = 0</runMetricsCondition>
+    <steppedValueSet variable="max-initial-vision" first="4" step="1" last="13"/>
+    <steppedValueSet variable="initial-population" first="100" step="20" last="1000"/>
+  </experiment>
+</experiments>
 @#$#@#$#@
 @#$#@#$#@
 default

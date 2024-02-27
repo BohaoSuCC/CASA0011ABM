@@ -1,3 +1,11 @@
+globals[
+  death-count  ;; the counts of turtles died due to no sugar
+  survival-ratio ;; the proportion of turtles died due to no sugar
+  gini-index-reserve
+  lorenz-points
+]
+
+
 turtles-own [
   sugar           ;; the amount of sugar this turtle has
   metabolism      ;; the amount of sugar that each turtles loses each tick
@@ -19,8 +27,11 @@ patches-own [
 to setup
   clear-all
   create-turtles initial-population [ turtle-setup ]
+  set death-count 0
+  set survival-ratio 1
   setup-patches
   reset-ticks
+  update-lorenz-and-gini
 end
 
 to turtle-setup ;; turtle procedure
@@ -29,21 +40,27 @@ to turtle-setup ;; turtle procedure
   move-to one-of patches with [not any? other turtles-here]
   set sugar random-in-range 5 25
   set metabolism random-in-range 1 4
-  set vision random-in-range 1 6
+  set vision random-in-range 1 max-initial-vision
   ;; turtles can look horizontally and vertically up to vision patches
   ;; but cannot look diagonally at all
   set vision-points []
   foreach (range 1 (vision + 1)) [ n ->
-    set vision-points sentence vision-points (list (list 0 n) (list n 0) (list 0 (- n)) (list (- n) 0))
+    set vision-points sentence vision-points (list
+      (list 0 n)
+      (list n 0)
+      (list 0 (- n))
+      (list (- n) 0))
   ]
   run visualization
 end
+
+
 
 to setup-patches
   file-open "sugar-map.txt"
   foreach sort patches [ p ->
     ask p [
-      set max-psugar file-read
+      set max-psugar (file-read + 3)
       set psugar max-psugar
       patch-recolor
     ]
@@ -66,10 +83,15 @@ to go
   ask turtles [
     turtle-move
     turtle-eat
-    if sugar <= 0
-      [ die ]
+    if sugar <= 0[
+      set death-count (death-count + 1)
+      die]
     run visualization
   ]
+
+  let total-turtles count turtles
+  set survival-ratio (total-turtles / initial-population)
+  update-lorenz-and-gini
   tick
 end
 
@@ -97,6 +119,25 @@ end
 to patch-growback ;; patch procedure
   ;; gradually grow back all of the sugar for the patch
   set psugar min (list max-psugar (psugar + 1))
+end
+
+to update-lorenz-and-gini
+  let num-people count turtles
+  let sorted-wealths sort [sugar] of turtles
+  let total-wealth sum sorted-wealths
+  let wealth-sum-so-far 0
+  let index 0
+  set gini-index-reserve 0
+  set lorenz-points []
+  repeat num-people [
+    set wealth-sum-so-far (wealth-sum-so-far + item index sorted-wealths)
+    set lorenz-points lput ((wealth-sum-so-far / total-wealth) * 100) lorenz-points
+    set index (index + 1)
+    set gini-index-reserve
+      gini-index-reserve +
+      (index / num-people) -
+      (wealth-sum-so-far / total-wealth)
+  ]
 end
 
 ;;
@@ -213,7 +254,7 @@ CHOOSER
 visualization
 visualization
 "no-visualization" "color-agents-by-vision" "color-agents-by-metabolism"
-0
+2
 
 PLOT
 720
@@ -260,7 +301,7 @@ initial-population
 initial-population
 10
 1000
-400.0
+210.0
 10
 1
 NIL
@@ -312,6 +353,76 @@ count turtles
 17
 1
 12
+
+PLOT
+760
+415
+960
+565
+Survival Ratio
+NIL
+NIL
+0.0
+10.0
+0.0
+1.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plotxy ticks survival-ratio"
+
+PLOT
+390
+525
+590
+675
+Lorenz curve
+Pop %
+Wealth %
+0.0
+100.0
+0.0
+100.0
+true
+true
+"" ""
+PENS
+"equal" 1.0 0 -16777216 true "" "plot count turtles"
+"lorenz" 1.0 0 -2674135 true "" "plot-pen-reset\nset-plot-pen-interval 100 / count turtles"
+
+PLOT
+745
+605
+945
+755
+Gini index vs. time
+Time
+Gini
+0.0
+100.0
+0.0
+1.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -13791810 true "" "plot (gini-index-reserve / count turtles ) * 2"
+
+SLIDER
+45
+250
+217
+283
+max-initial-vision
+max-initial-vision
+4
+13
+6.0
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -677,6 +788,18 @@ NetLogo 6.4.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
+<experiments>
+  <experiment name="experiment" repetitions="4" runMetricsEveryStep="false">
+    <setup>setup</setup>
+    <go>go</go>
+    <exitCondition>ticks = 2000</exitCondition>
+    <metric>Gini-index-reserve</metric>
+    <metric>survival-ratio</metric>
+    <runMetricsCondition>ticks mod 100 = 0</runMetricsCondition>
+    <steppedValueSet variable="max-initial-vision" first="4" step="1" last="13"/>
+    <steppedValueSet variable="initial-population" first="100" step="20" last="1000"/>
+  </experiment>
+</experiments>
 @#$#@#$#@
 @#$#@#$#@
 default
