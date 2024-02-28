@@ -1,6 +1,7 @@
 globals [
   gini-index-reserve
   lorenz-points
+  gini-index
   death-count ;; the counts of turtles died due to no sugar
   survival-ratio ;; the proportion of turtles died due to no sugar
 ]
@@ -103,6 +104,7 @@ to go
   let total-turtles count turtles
   set survival-ratio (total-turtles / initial-population)
   update-lorenz-and-gini
+  set gini-index ((gini-index-reserve / count turtles) * 2)
   tick
 end
 
@@ -265,7 +267,7 @@ CHOOSER
 visualization
 visualization
 "no-visualization" "color-agents-by-vision" "color-agents-by-metabolism"
-1
+2
 
 PLOT
 720
@@ -802,10 +804,10 @@ NetLogo 6.4.0
     <setup>setup</setup>
     <go>go</go>
     <exitCondition>ticks = 2000</exitCondition>
-    <metric>Gini-index-reserve</metric>
+    <metric>gini-index</metric>
     <metric>survival-ratio</metric>
-    <runMetricsCondition>ticks mod 100 = 0</runMetricsCondition>
-    <steppedValueSet variable="max-initial-vision" first="4" step="1" last="13"/>
+    <runMetricsCondition>ticks mod 200 = 0</runMetricsCondition>
+    <steppedValueSet variable="max-initial-vision" first="2" step="1" last="13"/>
     <steppedValueSet variable="initial-population" first="100" step="20" last="1000"/>
   </experiment>
 </experiments>
