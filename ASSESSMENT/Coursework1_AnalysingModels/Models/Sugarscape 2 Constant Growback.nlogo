@@ -4,6 +4,7 @@ globals[
   gini-index
   gini-index-reserve
   lorenz-points
+  total-sugar-added
 ]
 
 
@@ -77,6 +78,7 @@ to go
   if not any? turtles [
     stop
   ]
+  set total-sugar-added 0
   ask patches [
     patch-growback
     patch-recolor
@@ -119,8 +121,15 @@ to patch-recolor ;; patch procedure
 end
 
 to patch-growback ;; patch procedure
+
+  let sugar-before psugar
+
   ;; gradually grow back all of the sugar for the patch
   set psugar min (list max-psugar (psugar + 1))
+
+  ;; 计算增长后与增长前的差值，并更新total-sugar-added
+  set total-sugar-added (total-sugar-added + (psugar - sugar-before))
+
 end
 
 to update-lorenz-and-gini
@@ -303,7 +312,7 @@ initial-population
 initial-population
 10
 1000
-210.0
+820.0
 10
 1
 NIL
@@ -425,6 +434,24 @@ max-initial-vision
 1
 NIL
 HORIZONTAL
+
+PLOT
+1250
+150
+1450
+300
+sugar-added
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot total-sugar-added"
 
 @#$#@#$#@
 ## WHAT IS IT?

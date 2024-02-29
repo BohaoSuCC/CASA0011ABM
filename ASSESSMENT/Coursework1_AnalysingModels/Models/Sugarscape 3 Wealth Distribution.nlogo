@@ -800,15 +800,17 @@ NetLogo 6.4.0
 @#$#@#$#@
 @#$#@#$#@
 <experiments>
-  <experiment name="experiment" repetitions="4" runMetricsEveryStep="false">
+  <experiment name="experiment" repetitions="6" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>go</go>
     <exitCondition>ticks = 2000</exitCondition>
     <metric>gini-index</metric>
     <metric>survival-ratio</metric>
-    <runMetricsCondition>ticks mod 200 = 0</runMetricsCondition>
-    <steppedValueSet variable="max-initial-vision" first="2" step="1" last="13"/>
-    <steppedValueSet variable="initial-population" first="100" step="20" last="1000"/>
+    <runMetricsCondition>ticks mod 4 = 0</runMetricsCondition>
+    <enumeratedValueSet variable="max-initial-vision">
+      <value value="6"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="initial-population" first="100" step="100" last="1000"/>
   </experiment>
 </experiments>
 @#$#@#$#@
